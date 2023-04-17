@@ -2,9 +2,10 @@
 
 ### 1. Hãy nêu các bước viết unit test
 
-- Write a failing test
-- Make the test pass
-- Refactor
+- Identify all possible case
+- Specify parameters and expected results for each case
+- Write test Execute test
+- Evaluation and assessment of results
 
 ### 2. Hãy nêu các thành phần cơ bản có trong 1 unit test
 
@@ -16,52 +17,27 @@
 
 ### 3. Liệt kê tất cả các test cases mà bạn có thể nghĩ ra để kiểm tra 1 mảng có phải là mảng số tăng dần hay không.
 
-#### Test case 1
-
-- Input: []
-- Expected: false
-
-#### Test case 2
-
-- Input: [9]
-- Expected: false
-
-#### Test case 3
-
-- Input: [1, 1, 5]
-- Expected: true
-
-#### Test case 4
-
-- Input: [6, 7, 7, 5]
-- Expected: false
-
-#### Test case 5
-
-- Input: [20, 7, 6, 3]
-- Expected: false
-
-#### Test case 6
-
-- Input: [1, 5, 9, 20]
-- Expected: true
-
-#### Test case 7
-
-- Input: [2, null, 5, 6]
-- Expected: false
-
-#### Test case 8
-
-- Input: [2, undefined, 5, 6]
-- Expected: false
-
-#### Test case 9
-
-- Input: ['10', '9', '8', '7']
-- Expected: false
-
-#### Test case 10
-
-- Input: [10, '9', '8', '7']
-- Expected: false
+| No  | Input                | Output |
+| --- | -------------------- | ------ |
+| 1   | []                   | False  |
+| 2   | [null]               | False  |
+| 3   | [undefined]          | False  |
+| 4   | [null, 3, 4]         | False  |
+| 5   | [undefined, 3, 4]    | False  |
+| 6   | ['3', null, 5]       | False  |
+| 7   | ['3', undefined, 5]  | False  |
+| 8   | ['1']                | False  |
+| 9   | ['', 3, 4]           | False  |
+| 10  | ['3', '4', '5']      | False  |
+| 11  | [2,'3', '4', '5']    | False  |
+| 12  | [1]                  | False  |
+| 13  | [3, 3]               | False  |
+| 14  | [3, 3, 4]            | False  |
+| 15  | [3, 4, 4]            | False  |
+| 16  | [2, 3, 3, 4]         | False  |
+| 17  | [2, 3, 2]            | False  |
+| 18  | [5, 4, 3]            | False  |
+| 19  | [3, 4, 5]            | True   |
+| 20  | [-1, 2, 3, 4, 5]     | True   |
+| 21  | [-1, -2, -3, -4, -5] | False  |
+| 21  | [-5, -4, -3]         | False  |
