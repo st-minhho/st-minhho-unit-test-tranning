@@ -19,19 +19,23 @@ describe('Cart', () => {
 
   describe('Get product from cart', () => {
     const mockGetCart = jest.spyOn(CartService.prototype, 'getCart');
-    cart.getCart();
+    beforeAll(() => {
+      cart.getCart();
+    });
     it('Get cart called', () => {
       expect(mockGetCart).toHaveBeenCalled();
     });
     it('Get cart data', () => {
-      expect(mockGetCart).toHaveLength(0);
+      expect(cart.getCart()).toHaveLength(0);
     });
   });
 
   describe('Add product to cart', () => {
     const mockAddCart = jest.spyOn(CartService.prototype, 'addCart');
-    cart.addCart(avocado, 2);
-    cart.addCart(apple, 5);
+    beforeAll(() => {
+      cart.addCart(avocado, 2);
+      cart.addCart(apple, 5);
+    });
 
     it('Add product called', () => {
       expect(mockAddCart).toHaveBeenCalled();

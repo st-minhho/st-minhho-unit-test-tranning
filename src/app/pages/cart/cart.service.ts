@@ -11,7 +11,6 @@ export class CartService {
   }
 
   addCart(product: Product, quantity: number) {
-    // Check if product already exists in cart
     const existedItem = this.cart.lineItems.find(
       (item) => item.product.id === product.id
     );
