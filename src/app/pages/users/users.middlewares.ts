@@ -3,9 +3,7 @@ import {
   getDetailUserFailed,
   getDetailUserSuccess,
   getUsersFailed,
-  getUsersSuccess,
-  removeUserFailed,
-  removeUserSuccess
+  getUsersSuccess
 } from './users.actions';
 import { all, put, takeLatest } from 'redux-saga/effects';
 import ACTION_TYPES from '@app/core/constants/types';
@@ -30,17 +28,7 @@ function* getDetailUser(action) {
   }
 }
 
-function* removeUser(action) {
-  try {
-    const res = yield api.delete(['users'], action.payload);
-    yield put(removeUserSuccess(res.data));
-  } catch (error) {
-    yield put(removeUserFailed(error));
-  }
-}
-
 export function* watchUsers() {
   yield all([takeLatest(ACTION_TYPES.GET_USERS, getUsers)]);
   yield all([takeLatest(ACTION_TYPES.GET_DETAIL_USER, getDetailUser)]);
-  yield all([takeLatest(ACTION_TYPES.REMOVE_USER, removeUser)]);
 }

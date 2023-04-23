@@ -1,13 +1,13 @@
 import ACTION_TYPES from '@app/core/constants/types';
 import { createReducer } from '@app/core/helpers/reducer-factory';
 
-interface IUserCompany {
+export interface IUserCompany {
   name: string;
   catchPhrase: string;
   bs: string;
 }
 
-interface IUserAddress {
+export interface IUserAddress {
   street: string;
   suite: string;
   city: string;
@@ -18,7 +18,7 @@ interface IUserAddress {
   };
 }
 
-interface IUser {
+export interface IUser {
   id: number;
   name: string;
   username: string;
@@ -28,12 +28,12 @@ interface IUser {
   website: string;
   company: IUserCompany;
 }
-interface IInititalState {
+export interface IInititalState {
   data: IUser[];
   isLoading: boolean;
   hasError: boolean;
   errorMessage: string;
-  user: {} | null;
+  user: IUser;
 }
 
 const initialState: IInititalState = {
@@ -82,20 +82,8 @@ const getUserDetailFailed = (state: IInititalState, payload) => ({
 
 const removeUser = (state: IInititalState, payload) => ({
   ...state,
-  isLoading: true
-});
-
-const removeUserSuccess = (state: IInititalState, payload) => ({
-  ...state,
-  isLoading: false,
-  data: payload.data
-});
-
-const removeUserFailed = (state: IInititalState, payload) => ({
-  ...state,
-  isLoading: false,
-  hasError: true,
-  error: payload.error
+  data: state.data.filter((item) => item.id !== payload),
+  isLoading: false
 });
 
 const strategies = {
@@ -106,8 +94,6 @@ const strategies = {
   [ACTION_TYPES.GET_DETAIL_USER_SUCCESS]: getUserDetailSuccess,
   [ACTION_TYPES.GET_DETAIL_USER_FAILED]: getUserDetailFailed,
   [ACTION_TYPES.REMOVE_USER]: removeUser,
-  [ACTION_TYPES.REMOVE_USER_SUCCESS]: removeUserSuccess,
-  [ACTION_TYPES.REMOVE_USER_FAILED]: removeUserFailed,
   __default__: (state) => state
 };
 

@@ -1,4 +1,5 @@
 import ACTION_TYPES from '@app/core/constants/types';
+import { IUser } from './users.reducers';
 
 export const getUsers = () => {
   return {
@@ -6,7 +7,7 @@ export const getUsers = () => {
   };
 };
 
-export const getUsersSuccess = (data: any) => {
+export const getUsersSuccess = (data: IUser[]) => {
   return {
     type: ACTION_TYPES.GET_USERS_SUCCESS,
     payload: data
@@ -26,7 +27,7 @@ export const getDetailUser = (id: number) => {
   };
 };
 
-export const getDetailUserSuccess = (data: any) => {
+export const getDetailUserSuccess = (data: IUser) => {
   return {
     type: ACTION_TYPES.GET_DETAIL_USER_SUCCESS,
     payload: data
@@ -44,19 +45,5 @@ export const removeUser = (id: number) => {
   return {
     type: ACTION_TYPES.REMOVE_USER,
     payload: id
-  };
-};
-
-export const removeUserSuccess = (data: any) => {
-  return {
-    type: ACTION_TYPES.REMOVE_USER_SUCCESS,
-    payload: data
-  };
-};
-
-export const removeUserFailed = (error: any) => {
-  return {
-    type: ACTION_TYPES.REMOVE_USER_FAILED,
-    payload: error
   };
 };
