@@ -22,18 +22,17 @@
 | 1   | []                   | False  |
 | 2   | [null]               | False  |
 | 3   | [undefined]          | False  |
-| 4   | [null, 3, 4]         | False  |
+| 4   | [3, null, 4]         | False  |
 | 5   | [undefined, 3, 4]    | False  |
 | 6   | ['3', null, 5]       | False  |
 | 7   | ['3', undefined, 5]  | False  |
-| 8   | ['1']                | False  |
-| 9   | ['', 3, 4]           | False  |
-| 10  | ['3', '4', '5']      | False  |
-| 11  | [2,'3', '4', '5']    | False  |
+| 8   | ['3']                | False  |
+| 9   | ['a', 3, 4]          | False  |
+| 10  | ['a', '4', '5']      | False  |
+| 11  | [2,'s', '4', '5']    | False  |
 | 12  | [1]                  | False  |
-| 13  | [3, 3]               | False  |
-| 14  | [3, 3, 4]            | False  |
-| 15  | [3, 4, 4]            | False  |
+| 13  | [3, 3]               | True   |
+| 15  | [3, 4, 4]            | True   |
 | 16  | [2, 3, 3, 4]         | False  |
 | 17  | [2, 3, 2]            | False  |
 | 18  | [5, 4, 3]            | False  |

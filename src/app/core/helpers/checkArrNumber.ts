@@ -1,23 +1,8 @@
-const isArrayAscending = (arr) => {
-  return arr.every((x, i) => {
-    return i === 0 || x >= arr[i - 1];
-  });
-};
-
-const isArrayNumber = (arr) => {
-  return arr.every((element) => {
-    return typeof element === 'number';
-  });
-};
-
-const isDuplicate = (arr) => {
-  return new Set(arr).size !== arr.length;
-};
-
-export const checkArray = (array) => {
-  if (array?.length <= 1 || !isArrayNumber(array) || isDuplicate(array)) {
+export const isArrayAscending = (arr) => {
+  if (!Array.isArray(arr) || arr.length <= 1) {
     return false;
-  } else {
-    return isArrayAscending(array);
   }
+  return arr.every((x, i) => {
+    return (i === 0 || x >= arr[i - 1]) && !isNaN(x);
+  });
 };
