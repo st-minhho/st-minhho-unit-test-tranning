@@ -5,75 +5,85 @@ const avocado: Product = {
   id: 1,
   name: 'avocado',
   price: 100,
-  discount: 5
+  discount: [
+    {
+      percent: 5,
+      number: 1
+    },
+    {
+      percent: 10,
+      number: 2
+    },
+    {
+      percent: 20,
+      number: 4
+    }
+  ]
 };
 const apple: Product = {
   id: 2,
   name: 'apple',
   price: 200,
-  discount: 10
+  discount: [
+    {
+      percent: 5,
+      number: 1
+    },
+    {
+      percent: 10,
+      number: 3
+    }
+  ]
 };
 
 describe('Cart', () => {
-  const cart = new CartService();
-
   describe('Get product from cart', () => {
-    const mockGetCart = jest.spyOn(CartService.prototype, 'getCart');
-    beforeAll(() => {
-      cart.getCart();
-    });
-    it('Get cart called', () => {
-      expect(mockGetCart).toHaveBeenCalled();
-    });
+    const cart = new CartService();
+
     it('Get cart data', () => {
       expect(cart.getCart()).toHaveLength(0);
     });
   });
 
   describe('Add product to cart', () => {
-    const mockAddCart = jest.spyOn(CartService.prototype, 'addCart');
-    beforeAll(() => {
-      cart.addCart(avocado, 2);
-      cart.addCart(apple, 5);
-    });
-
-    it('Add product called', () => {
-      expect(mockAddCart).toHaveBeenCalled();
-      expect(mockAddCart).toHaveBeenCalledWith(avocado, 2);
-      expect(mockAddCart).toHaveBeenCalledWith(apple, 5);
-    });
-
+    const cart = new CartService();
     it('Get number product in cart', () => {
+      cart.addCart(apple, 5);
+      expect(cart.getCart()).toHaveLength(1);
+      cart.addCart(avocado, 5);
       expect(cart.getCart()).toHaveLength(2);
+      // expect(cart.cart.lineItems[0].product).toContain(apple);
+    });
+  });
+
+  describe('Update product to cart', () => {
+    const cart = new CartService();
+    it('Get number product in cart', () => {
+      cart.addCart(apple, 2);
+      expect(cart.getCart()).toHaveLength(1);
+      expect(cart.cart.lineItems[0].quantity).toBe(2);
+      cart.updateCart(apple, 10);
+      expect(cart.cart.lineItems[0].quantity).toBe(10);
     });
   });
 
   describe('Remove 1 product from cart', () => {
-    const mockRemoveCart = jest.spyOn(CartService.prototype, 'removeCart');
-    beforeAll(() => {
-      cart.removeCart(avocado);
-    });
-    it('Remove product called', () => {
-      expect(mockRemoveCart).toHaveBeenCalled();
-      expect(mockRemoveCart).toHaveBeenCalledWith(avocado);
-    });
-
+    const cart = new CartService();
+    cart.addCart(avocado, 2);
+    cart.addCart(apple, 5);
+    cart.removeCart(avocado);
     it('Get number product in cart after remove', () => {
       expect(cart.getCart()).toHaveLength(1);
+      expect(cart.cart.lineItems[0].quantity).toBe(5);
     });
   });
 
   describe('Remove all product from cart', () => {
-    const mockRemoveCart = jest.spyOn(CartService.prototype, 'removeCart');
-    beforeAll(() => {
-      cart.removeCart(avocado);
-      cart.removeCart(apple);
-    });
-    it('Remove product called', () => {
-      expect(mockRemoveCart).toHaveBeenCalled();
-      expect(mockRemoveCart).toHaveBeenCalledWith(avocado);
-      expect(mockRemoveCart).toHaveBeenCalledWith(apple);
-    });
+    const cart = new CartService();
+    cart.addCart(avocado, 2);
+    cart.addCart(apple, 5);
+    cart.removeCart(avocado);
+    cart.removeCart(apple);
 
     it('Get number product in cart after remove', () => {
       expect(cart.getCart()).toHaveLength(0);
@@ -81,21 +91,15 @@ describe('Cart', () => {
   });
 
   describe('Get total in cart', () => {
-    const mockGetTotalPrice = jest.spyOn(
-      CartService.prototype,
-      'getTotalPrice'
-    );
-    beforeAll(() => {
-      cart.addCart(apple, 2);
-      cart.getTotalPrice();
+    const cart = new CartService();
+    cart.addCart(apple, 3);
+    cart.getTotalPrice();
+    it('getTotalPrice value', () => {
+      expect(cart.getTotalPrice()).toEqual(540);
     });
-
-    it('getTotalPrice called', () => {
-      expect(mockGetTotalPrice).toHaveBeenCalled();
-    });
-
-    it('getTotalPrice vluae', () => {
-      expect(cart.getTotalPrice()).toEqual(360);
+    it('getTotalPrice value', () => {
+      cart.addCart(avocado, 4);
+      expect(cart.getTotalPrice()).toEqual(860);
     });
   });
 });

@@ -1,4 +1,4 @@
-import { Product } from '../product/product';
+import { Discount, Product } from '../product/product';
 import { Cart, LineItem } from './cart';
 
 export class CartService {
@@ -26,6 +26,15 @@ export class CartService {
     }
   }
 
+  updateCart(product: Product, quantity: number) {
+    const existedItem = this.cart.lineItems.find(
+      (item) => item.product.id === product.id
+    );
+    if (existedItem) {
+      existedItem.quantity = quantity;
+    }
+  }
+
   removeCart(product: Product) {
     const existedItem = this.cart.lineItems.find(
       (item) => item.product.id === product.id
@@ -40,10 +49,17 @@ export class CartService {
 
   getTotalPrice() {
     return this.cart.lineItems.reduce((sum, item: LineItem) => {
+      let maxDiscount = 0;
+      item.product.discount.forEach((discount: Discount) => {
+        if (
+          item.quantity >= discount.number &&
+          discount.percent > maxDiscount
+        ) {
+          maxDiscount = discount.percent;
+        }
+      });
       return (
-        sum +
-        (item.product.price * item.quantity * (100 - item.product.discount)) /
-          100
+        sum + (item.product.price * item.quantity * (100 - maxDiscount)) / 100
       );
     }, 0);
   }
